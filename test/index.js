@@ -14,7 +14,7 @@ var expect = Code.expect
 
 describe('seneca-cluster', function () {
   it('can be used by seneca', function (done) {
-    var seneca = Seneca({ log: 'silent' })
+    var seneca = Seneca({ log: 'silent', default_plugins: { cluster: false } })
 
     var fn = function () {
       seneca.use(senecaCluster)
@@ -26,11 +26,12 @@ describe('seneca-cluster', function () {
 
   it('cluster errors when node version is less than 0.12.0', function (done) {
     var version = process.versions.node
-    var seneca = Seneca({ log: 'silent' })
+    var seneca = Seneca({ log: 'silent', default_plugins: { cluster: false } })
+    seneca.use(senecaCluster)
 
     seneca.die = function (err) {
       process.versions.node = version
-      assert.strictEqual(err.code, 'bad_cluster_version')
+      expect(err.code).to.equal('bad_cluster_version')
       done()
     }
 
