@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "test": "lab -v -L -t 50"
+    "test": "lab -v -L -t 60"
   },
   "keywords": [
     "seneca",
